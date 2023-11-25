@@ -115,6 +115,10 @@ from zenml.zen_stores.sql_zen_store import SqlZenStore
 DEFAULT_NAME = "default"
 
 
+from zenml.logger import get_logger
+
+logger = get_logger(__name__)
+
 @pytest.fixture
 def client() -> Client:
     return Client()
@@ -2613,6 +2617,15 @@ def test_logs_are_recorded_properly(clean_client):
             step2_logs.uri, artifact_store=artifact_store, mode="r"
         )
 
+        logger.info("######### STEP 1")
+        logger.info(step1_logs_content)
+        logger.info("######### STEP 2")
+        logger.info(step2_logs_content)
+        print("######### STEP 1")
+        print(step1_logs_content)
+        print("######### STEP 2")
+        print(step2_logs_content)
+        
         # Step 1 has the word log! Defined in PipelineRunContext
         assert "log" in step1_logs_content
 
